@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';  // Import Link from react-router-dom
 import API from '../services/api';
+import '../styles/components/order.css';
 
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
@@ -28,16 +30,33 @@ const OrdersList = () => {
   if (loading) return <div>Loading orders...</div>;
   if (error) return <div>{error}</div>;
 
+  // Sorting orders by totalAmount
+  const sortedOrders = orders.sort((a, b) => a.totalAmount - b.totalAmount);
+
   return (
-    <div>
-      <h2>Orders List</h2>
+    <div className="container mt-4">
+      <h2 className="text-center">Orders List</h2>
+
+      {/* Button to navigate to the order creation form */}
+      <div className="text-center mb-3">
+        <Link to="/orders/form" className="btn btn-primary">Create New Order</Link>
+      </div>
+
       {orders.length === 0 ? (
-        <p>No orders found.</p>
+        <p className="text-center">No orders found.</p>
       ) : (
-        <ul>
-          {orders.map((order) => (
-            <li key={order._id}>
-              Order ID: {order._id} - Total: ${order.totalAmount} - Status: {order.orderStatus}
+        <ul className="list-group">
+          {sortedOrders.map((order) => (
+            <li key={order._id} className="list-group-item">
+              <strong>Order ID:</strong> {order._id} - 
+              <strong> Total:</strong> ${order.totalAmount} - 
+              <strong> Status:</strong> {order.orderStatus}
+              <div className="mt-2">
+                {/* Link to the order details */}
+                <Link to={`/orders/${order._id}`} className="btn btn-info btn-sm me-2">View Details</Link>
+                {/* Link to the order form for editing */}
+                <Link to={`/orders/form?edit=${order._id}`} className="btn btn-warning btn-sm">Edit Order</Link>
+              </div>
             </li>
           ))}
         </ul>

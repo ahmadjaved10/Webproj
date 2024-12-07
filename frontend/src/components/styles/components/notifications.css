@@ -1,69 +1,179 @@
-/* notifications.css */
+.notifications-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
 .notifications-list {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  z-index: 1;
+  margin-top: 2rem;
 }
 
 .notifications-list h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-}
-
-.notification-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
-.notification-form label {
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
   font-weight: bold;
+  color: #333;
 }
 
-.notification-form select,
-.notification-form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+/* Shared styles for notification items */
+.notification-item {
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.notification-form .submit-btn {
-  padding: 0.75rem;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.notification-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notification-item h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.notification-item p {
+  color: #555;
   font-size: 1rem;
+}
+
+/* Specific styles for each notification type */
+.order-notifications .notification-item {
+  background-color: #f2f8ff;
+  border-left: 5px solid #4a90e2;
+}
+
+.low-stock-notifications .notification-item {
+  background-color: #fff3e6;
+  border-left: 5px solid #ff7f50;
+}
+
+.third-notifications .notification-item {
+  background-color: #e6f7e6;
+  border-left: 5px solid #32cd32;
+}
+
+/* Button styles for viewing all notifications */
+.view-notifications-btn {
+  background-color: #2575fc;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
   margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
 }
 
-.notification-form .submit-btn:hover {
-  background-color: #45a049;
+.view-notifications-btn:hover {
+  background-color: #1b58c2;
 }
 
+/* Button styles for creating a new notification */
 .create-notification-btn {
-  background-color: #4CAF50;
+  background-color: #6a11cb;
   color: white;
   padding: 0.75rem;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
-  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
 }
 
 .create-notification-btn:hover {
-  background-color: #45a049;
+  background-color: #5a0eaf;
 }
 
+/* Modal styles for the notification form */
+.modal-dialog {
+  max-width: 800px;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  background-color: #6a11cb;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 1rem;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.notification-form input,
+.notification-form select,
+.notification-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.notification-form input:focus,
+.notification-form select:focus,
+.notification-form textarea:focus {
+  border-color: #6a11cb;
+  outline: none;
+}
+
+.notification-form .submit-btn {
+  background-color: #6a11cb;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notification-form .submit-btn:hover {
+  background-color: #5a0eaf;
+}
+
+/* Media Queries for responsiveness */
 @media (max-width: 768px) {
   .notifications-list {
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .notification-form input,
@@ -73,6 +183,11 @@
   }
 
   .notification-form .submit-btn {
+    font-size: 1.1rem;
+  }
+
+  .create-notification-btn,
+  .view-notifications-btn {
     font-size: 1.1rem;
   }
 }

@@ -1,59 +1,75 @@
-// OrderForm.jsx
 import React, { useState } from 'react';
 import API from '../services/api';
 
-const OrderForm = ({ initialData = {}, onSuccess }) => {
+const OrderForm = () => {
   const [orderData, setOrderData] = useState({
-    products: initialData.products || '',
-    totalAmount: initialData.totalAmount || '',
+    customerName: '',
+    totalAmount: '',
+    orderStatus: '',
+    // Add other fields as needed
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setOrderData({ ...orderData, [name]: value });
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-      if (initialData._id) {
-        // Update an existing order
-        await API.put(`/orders/${initialData._id}`, orderData);
-      } else {
-        // Create a new order
-        await API.post('/orders', orderData);
-      }
-      if (onSuccess) onSuccess(); // Notify parent about successful submission
+      const response = await API.post('/orders', orderData);
+      console.log('Order created:', response.data);
+      // Redirect or show success message
     } catch (error) {
-      console.error('Error submitting order:', error);
+      console.error('Error creating order:', error);
     }
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setOrderData({
+      ...orderData,
+      [name]: value,
+    });
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{initialData._id ? 'Edit Order' : 'Create Order'}</h2>
-      <div>
-        <label>Products:</label>
-        <input
-          type="text"
-          name="products"
-          value={orderData.products}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Total Amount:</label>
-        <input
-          type="number"
-          name="totalAmount"
-          value={orderData.totalAmount}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    <div className="container mt-4">
+      <h2>Create New Order</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="customerName" className="form-label">Customer Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="customerName"
+            name="customerName"
+            value={orderData.customerName}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="totalAmount" className="form-label">Total Amount</label>
+          <input
+            type="number"
+            className="form-control"
+            id="totalAmount"
+            name="totalAmount"
+            value={orderData.totalAmount}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="orderStatus" className="form-label">Order Status</label>
+          <input
+            type="text"
+            className="form-control"
+            id="orderStatus"
+            name="orderStatus"
+            value={orderData.orderStatus}
+            onChange={handleChange}
+          />
+        </div>
+        {/* Add more fields as needed */}
+        <button type="submit" className="btn btn-primary">Create Order</button>
+      </form>
+    </div>
   );
 };
 

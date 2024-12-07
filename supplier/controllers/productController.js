@@ -10,6 +10,32 @@ exports.addProduct = async (req, res, next) => {
     }
 };
 
+
+exports.getProductById = async (req, res, next) => {
+    console.log('Product ID:', req.params.id); // Log the ID to check if it's being passed
+    try {
+        const product = await Product.findOne({
+            _id: req.params.id,
+            supplierId: req.user._id
+        });
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found or you are not authorized to access it.' });
+        }
+
+        res.status(200).json(product);
+    } catch (error) {
+        if (error.name === 'CastError') {
+            return res.status(400).json({ message: 'Invalid product ID format.' });
+        }
+        next(error);
+    }
+};
+
+
+
+
+
 exports.getProducts = async (req, res, next) => {
     try {
         const products = await Product.find({ supplierId: req.user._id });

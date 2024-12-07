@@ -9,6 +9,9 @@ const Header = () => {
           <Link to="/" className="logo">TASTY & Fresh Food</Link>
           <nav>
             <ul>
+            <li>
+                <Link to="/home">Home</Link>
+              </li>
               <li>
                 <Link to="/orders">Orders</Link>
               </li>
@@ -27,6 +30,7 @@ const Header = () => {
               <li>
                 <Link to="/support">Support Tickets</Link>
               </li>
+              
             </ul>
           </nav>
         </div>

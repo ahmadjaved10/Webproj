@@ -1,7 +1,7 @@
 // NotificationForm.jsx
 import React, { useState } from 'react';
 import API from '../services/api';
-import '../styles/components/notifications.css';
+
 
 const NotificationForm = () => {
   const [type, setType] = useState('');
