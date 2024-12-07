@@ -4,8 +4,8 @@ import '../styles/components/gallery.css';
 
 const GalleryList = () => {
  const galleryItems = [
-   { id: 1, image: '/dish1.jpg' },
-   { id: 2, image: '/dish2.jpg' },
+   { id: 1, image: '' },
+   { id: 2, image: './logo192.png' },
    { id: 3, image: '/dish3.jpg' },
    { id: 4, image: '/dish4.jpg' },
    { id: 5, image: '/dish5.jpg' },

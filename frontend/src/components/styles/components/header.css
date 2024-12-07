@@ -1,36 +1,44 @@
+/* src/components/Header/header.css */
 .header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
-  }
-  
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-  }
-  
-  .header nav ul {
-    display: flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .header nav li {
-    margin-left: 1rem;
-  }
-  
-  .header nav a {
-    color: #fff;
-    text-decoration: none;
-  }
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+
+.header nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header nav li {
+  margin-left: 1rem;
+}
+
+.header nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.header nav a:hover {
+  background-color: #555;
+  border-radius: 4px;
+}

@@ -1,5 +1,7 @@
+// NotificationForm.jsx
 import React, { useState } from 'react';
-import API from '../../services/api';
+import API from '../services/api';
+import '../styles/components/notifications.css';
 
 const NotificationForm = () => {
   const [type, setType] = useState('');
@@ -7,42 +9,33 @@ const NotificationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const notificationData = {
-        type,
-        message,
-      };
-      await API.post('/notifications', notificationData); // Assuming a POST request to create a new notification
+      const response = await API.post('/notifications', { type, message });
+      console.log('Notification created:', response.data);
       alert('Notification created successfully!');
     } catch (error) {
-      console.error('Error creating notification:', error);
+      console.error('Failed to create notification:', error.response?.data || error.message);
+      alert('Failed to create notification');
     }
   };
 
   return (
-    <div>
-      <h3>Create Notification</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Notification Type:
-          <input
-            type="text"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Message:
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Create Notification</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="notification-form">
+      <label>
+        Type:
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="Order Alert">Order Alert</option>
+          <option value="Low Stock Alert">Low Stock Alert</option>
+          <option value="Promotional Reminder">Promotional Reminder</option>
+        </select>
+      </label>
+      <label>
+        Message:
+        <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
+      </label>
+      <button type="submit" className="submit-btn">Create Notification</button>
+    </form>
   );
 };
 

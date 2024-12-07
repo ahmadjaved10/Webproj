@@ -1,41 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import API from '../../services/api';  // Axios instance to communicate with backend
+import API from '../services/api';
 
 const OrdersList = () => {
-  const [orders, setOrders] = useState([]); // State to store the list of orders
-  const [loading, setLoading] = useState(true); // State to track the loading status
-  const [error, setError] = useState(null); // State to store any error message
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetching orders from backend when the component mounts
     const fetchOrders = async () => {
       try {
-        const response = await API.get('/orders');  // Adjust the endpoint as needed
-        setOrders(response.data);  // Save orders data to state
+        const response = await API.get('/orders');
+        setOrders(response.data);
       } catch (error) {
-        setError('Error fetching orders: ' + error.message);  // Set error state
+        if (error.response && error.response.status === 401) {
+          setError('Unauthorized access. Please log in again.');
+        } else {
+          setError('Error fetching orders: ' + (error.message || 'Unknown error'));
+        }
       } finally {
-        setLoading(false);  // Set loading to false once data fetching is done
+        setLoading(false);
       }
     };
 
     fetchOrders();
-  }, []);  // Empty dependency array ensures this runs only once when component mounts
+  }, []);
 
-  // Render loading spinner, error message, or orders list
-  if (loading) {
-    return <div>Loading orders...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Loading orders...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>
       <h2>Orders List</h2>
       {orders.length === 0 ? (
-        <p>No orders found.</p>  // Handle case when there are no orders
+        <p>No orders found.</p>
       ) : (
         <ul>
           {orders.map((order) => (

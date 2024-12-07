@@ -1,58 +1,40 @@
 import React, { useState } from 'react';
-import API from '../../services/api';
+
 
 const ProductForm = () => {
-  const [name, setName] = useState('');
+  const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
-  const [stock, setStock] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const productData = {
-        name,
-        price: parseFloat(price),
-        stock: parseInt(stock),
-      };
-      await API.post('/products', productData); // Assuming a POST request to create a new product
-      alert('Product added successfully!');
-    } catch (error) {
-      console.error('Error adding product:', error);
-    }
+    // Handle form submission logic here
+    console.log('Product Name:', productName);
+    console.log('Price:', price);
   };
 
   return (
-    <div>
-      <h3>Add Product</h3>
+    <div className="form-container">
+      <h2>Product Form</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Product Name:
+        <div>
+          <label>Product Name:</label>
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            required
           />
-        </label>
-        <br />
-        <label>
-          Price:
+        </div>
+        <div>
+          <label>Price:</label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
-        </label>
-        <br />
-        <label>
-          Stock:
-          <input
-            type="number"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Add Product</button>
+        </div>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

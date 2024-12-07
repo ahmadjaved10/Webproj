@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import API from '../../services/api';
+import API from '../services/api';
 
 const OrderDetails = ({ orderId }) => {
   const [order, setOrder] = useState(null);

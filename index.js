@@ -20,6 +20,12 @@ const MONGO_URI = process.env.MONGO_URI;  // Define MONGO_URI
 // Initialize the app
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:3000',  // React frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,  // Allow cookies if needed
+};
+
 // Middleware
 app.use(cors());
 app.use(express.json());

@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import API from '../../services/api';  // Axios instance for backend requests
+import API from '../services/api';  // Axios instance for backend requests
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);

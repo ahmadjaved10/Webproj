@@ -22,7 +22,7 @@ exports.markAsRead = async (req, res, next) => {
     }
 };
 
-exports.createNotification = async (req, res, next) => {
+/*exports.createNotification = async (req, res, next) => {
     try {
         const { type, message } = req.body;
 
@@ -36,6 +36,45 @@ exports.createNotification = async (req, res, next) => {
         // Save the notification to the database
         const savedNotification = await notification.save();
         res.status(201).json(savedNotification);
+    } catch (error) {
+        next(error);
+    }
+}; */
+
+exports.createNotification = async (req, res, next) => {
+    try {
+        if (!req.user || !req.user._id) {
+            return res.status(400).json({ error: 'Supplier ID is required' });
+        }
+
+        const { type, message } = req.body;
+        if (!type || !message) {
+            return res.status(400).json({ error: 'Type and message are required' });
+        }
+
+        const notification = new Notification({
+            supplierId: req.user._id,
+            type,
+            message,
+        });
+
+        const savedNotification = await notification.save();
+        res.status(201).json(savedNotification);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+exports.markAsRead = async (req, res, next) => {
+    try {
+        const notification = await Notification.findByIdAndUpdate(
+            req.params.id,
+            { isRead: true },
+            { new: true }
+        );
+        res.status(200).json(notification);
     } catch (error) {
         next(error);
     }

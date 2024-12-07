@@ -1,0 +1,78 @@
+/* notifications.css */
+.notifications-list {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.notifications-list h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.notification-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.notification-form label {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.notification-form select,
+.notification-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.notification-form .submit-btn {
+  padding: 0.75rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.notification-form .submit-btn:hover {
+  background-color: #45a049;
+}
+
+.create-notification-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+.create-notification-btn:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  .notifications-list {
+    padding: 1rem;
+  }
+
+  .notification-form input,
+  .notification-form select,
+  .notification-form textarea {
+    width: 100%;
+  }
+
+  .notification-form .submit-btn {
+    font-size: 1.1rem;
+  }
+}
