@@ -1,34 +1,69 @@
-// InventoryList.jsx
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
-import '../styles/components/inventory.css';
+import { Link } from 'react-router-dom';
 
 const InventoryList = () => {
-  const [inventory, setInventory] = useState([]);
+  const [inventoryLogs, setInventoryLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchInventory = async () => {
+    const fetchInventoryLogs = async () => {
       try {
         const response = await API.get('/inventory');
-        setInventory(response.data);
+        setInventoryLogs(response.data);
       } catch (error) {
-        console.error('Error fetching inventory:', error);
+        console.error('Error fetching inventory logs:', error);
+        setError('Failed to load inventory logs.');
+      } finally {
+        setLoading(false);
       }
     };
-    fetchInventory();
+    
+    fetchInventoryLogs();
   }, []);
 
+  const deleteInventoryLog = async (id) => {
+      try {
+          await API.delete(`/inventory/${id}`);
+          setInventoryLogs(inventoryLogs.filter((log) => log._id !== id));
+      } catch (error) {
+          console.error('Error deleting inventory log:', error);
+          setError('Failed to delete the inventory log. Please try again.');
+      }
+  };
+
+  if (loading) return <div>Loading inventory logs...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <div className="inventory-list">
-      <h2>Inventory List</h2>
-      <ul className="inventory-items">
-        {inventory.map((item) => (
-          <li key={item._id} className="inventory-item">
-            {item.productId} - {item.changeQuantity}
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="container mt-4">
+          <h2>Inventory List</h2>
+          <Link to="/inventory/form" className="btn btn-primary mb-3">Create New Inventory Log</Link>
+          {inventoryLogs.length === 0 ? (
+              <p>No inventory logs found.</p>
+          ) : (
+              <ul className="list-group">
+                  {inventoryLogs.map((log) => (
+                      <li key={log._id} className="list-group-item d-flex justify-content-between align-items-center">
+                          <div>
+                              Product ID: {log.productId} - Change Quantity: {log.changeQuantity} - Change Type: {log.changeType}
+                          </div>
+                          <div>
+                              {/* Link to edit form with log ID */}
+                              <Link to={`/inventory/form?edit=${log._id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
+                              <button 
+                                  className="btn btn-danger btn-sm" 
+                                  onClick={() => deleteInventoryLog(log._id)}
+                              >
+                                  Delete
+                              </button>
+                          </div>
+                      </li>
+                  ))}
+              </ul>
+          )}
+      </div>
   );
 };
 

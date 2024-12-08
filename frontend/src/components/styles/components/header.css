@@ -1,44 +1,31 @@
-/* src/components/Header/header.css */
+/* header.css */
 .header {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
+    background-color: #f8f9fa; /* Light background */
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+.nav-link {
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.header .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  color: #fff;
+.nav-link:hover {
+    color: #fff;
+    background-color: #007bff; /* Blue background on hover */
+    text-decoration: none;
 }
 
-.header nav ul {
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.logo {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
 }
 
-.header nav li {
-  margin-left: 1rem;
+/* Add a shadow for a more modern look */
+header.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
 }
 
-.header nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.header nav a:hover {
-  background-color: #555;
-  border-radius: 4px;
+.hover-link {
+    transition: color 0.2s ease;
 }

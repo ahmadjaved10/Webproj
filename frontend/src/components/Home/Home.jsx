@@ -11,9 +11,13 @@ const Home = () => {
     <div className="home-page">
       <Header />
       <Hero />
+      {/* Assuming MenuList is styled appropriately */}
       <MenuList />
+      {/* Assuming GalleryList is styled appropriately */}
       <GalleryList />
+      {/* Assuming CTA is styled appropriately */}
       <CTA />
+      {/* Footer styled with Bootstrap */}
       <Footer />
     </div>
   );

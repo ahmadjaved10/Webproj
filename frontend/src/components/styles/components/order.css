@@ -91,3 +91,70 @@
   border-radius: 8px;
   width: 100%;
 }
+
+/* Enhance overall list item */
+.list-group-item {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list-group-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons container - Flexbox for spacing */
+.d-flex {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Button Styling */
+.btn {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.btn-sm {
+  font-size: 0.75rem;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Create New Order Button */
+.btn-primary {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+/* Button color variations */
+.btn-info {
+  background-color: #17a2b8;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+/* General layout for the page */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+

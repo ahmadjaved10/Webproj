@@ -32,6 +32,7 @@ import InventoryForm from './components/Inventory/InventoryForm';
 
 import SupportTicketList from './components/Support/SupportTicketList';
 import SupportTicketForm from './components/Support/SupportTicketForm';
+import SupportTicketDetail from './components/Support/SupportTicketDetail';
 
 import PrivateRoute from './components/Shared/PrivateRoute';
 import Login from './components/Login/Login';
@@ -90,9 +91,13 @@ function App() {
                   <Route path="inventory" element={<InventoryList />} />
                   <Route path="inventory/form" element={<PrivateRoute element={<InventoryForm />} />} />
 
-                  {/* Support Tickets Routes */}
-                  <Route path="support" element={<SupportTicketList />} />
-                  <Route path="support-tickets/form" element={<PrivateRoute element={<SupportTicketForm />} />} />
+                   {/* Support Tickets Routes */}
+     
+        <Route path="/support" element={<SupportTicketList />} />
+        <Route path="/support/form" element={<SupportTicketForm />} />
+        <Route path="/support/:id" element={<SupportTicketDetail />} />
+        
+        {/* Other routes */}
                 </Routes>
               </ErrorBoundary>
             </Layout>

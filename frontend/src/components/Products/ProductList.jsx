@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../services/api';  // Axios instance for backend requests
 import { Link } from 'react-router-dom';  // Importing Link for navigation
-import '../styles/components/product.css';
+
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -43,15 +43,17 @@ const ProductList = () => {
       </div>
       <div className="row">
         {products.map((product) => (
-          <div className="col-md-4 mb-3" key={product._id}> {/* Use product._id here */}
+          <div className="col-md-4 mb-3" key={product._id}>
             <div className="card shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">Price: ${product.price}</p>
                 <p className="card-text">Stock: {product.stock}</p>
                 <p className="card-text">Status: {product.status}</p>
-                <Link to={`/products/${product._id}`} className="btn btn-primary">Edit</Link> {/* Include product._id here */}
-                <button className="btn btn-danger ms-2" onClick={() => handleDelete(product._id)}>Delete</button>
+                <div className="d-flex gap-2 mt-3"> {/* Flexbox for buttons */}
+                  <Link to={`/products/${product._id}`} className="btn btn-primary flex-grow-1">Edit</Link>
+                  <button className="btn btn-danger flex-grow-1" onClick={() => handleDelete(product._id)}>Delete</button>
+                </div>
               </div>
             </div>
           </div>
@@ -59,6 +61,7 @@ const ProductList = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ProductList;
