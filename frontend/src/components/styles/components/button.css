@@ -1,16 +1,33 @@
 .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #45a049;
-  }
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--grad-ember);
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  box-shadow: var(--shadow-ember);
+  transition: all 0.4s var(--ease);
+  will-change: transform;
+}
+.button::after {                       /* sheen sweep */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translate3d(-130%, 0, 0);
+  transition: transform 0.7s var(--ease-out);
+}
+.button:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(194, 65, 12, 0.4); }
+.button:hover::after { transform: translate3d(130%, 0, 0); }
+.button:active { transform: scale(0.95); box-shadow: var(--shadow-1); transition-duration: 0.12s; }

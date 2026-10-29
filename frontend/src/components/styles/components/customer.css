@@ -1,0 +1,227 @@
+.customer-page {
+  width: min(1120px, 100% - 2rem);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  color: var(--text);
+}
+
+.customer-page h1,
+.customer-page h2 {
+  color: var(--forest-900);
+}
+
+.customer-page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.customer-page-heading h1 {
+  margin-bottom: 0.5rem;
+}
+
+.customer-eyebrow {
+  margin-bottom: 0.4rem;
+  color: var(--ember-dark);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.customer-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.customer-product-card,
+.customer-cart-row,
+.customer-cart-summary,
+.customer-order-card {
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.customer-product-card img {
+  width: 100%;
+  max-height: 190px;
+  object-fit: cover;
+  border-radius: var(--r-md);
+}
+
+.customer-product-content {
+  padding-top: 1rem;
+}
+
+.customer-product-content h2,
+.customer-cart-row h2,
+.customer-order-card h2 {
+  font-size: 1.25rem;
+}
+
+.customer-price {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.customer-price strong {
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.customer-price span,
+.customer-order-status {
+  padding: 0.3rem 0.65rem;
+  background: var(--success-soft);
+  color: var(--success);
+  border-radius: var(--r-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.customer-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1.2rem;
+  color: #fff;
+  background: var(--grad-forest);
+  border: 0;
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.customer-button:hover {
+  color: #fff;
+  filter: brightness(1.08);
+}
+
+.customer-button:disabled,
+.customer-button-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.customer-button-secondary {
+  color: var(--forest-900);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.customer-button-secondary:hover {
+  color: var(--primary);
+}
+
+.customer-error,
+.customer-notice {
+  padding: 0.9rem 1rem;
+  border-radius: var(--r-md);
+}
+
+.customer-error {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.customer-notice {
+  color: var(--forest-900);
+  background: var(--success-soft);
+}
+
+.customer-cart-items,
+.customer-order-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.customer-cart-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.customer-cart-row label,
+.customer-form label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--forest-800);
+  font-weight: 700;
+}
+
+.customer-cart-row input,
+.customer-form input,
+.customer-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.customer-cart-row input {
+  max-width: 100px;
+}
+
+.customer-cart-summary {
+  margin-top: 1.25rem;
+}
+
+.customer-cart-summary > p:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.customer-form {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 700px;
+  padding: clamp(1.2rem, 4vw, 2rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.customer-form .customer-cart-summary {
+  margin: 0;
+}
+
+.customer-order-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.customer-order-card ul {
+  padding-left: 1.25rem;
+}
+
+.customer-auth .card {
+  max-width: 520px;
+}
+
+.customer-auth textarea.form-control {
+  min-height: 70px;
+}
+
+@media (max-width: 640px) {
+  .customer-page-heading,
+  .customer-cart-row,
+  .customer-order-card header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

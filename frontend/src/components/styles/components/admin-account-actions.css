@@ -1,0 +1,52 @@
+.admin-account-delete {
+  padding: 0.55rem 0.85rem;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 0;
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-account-delete:hover {
+  color: #fff;
+  background: var(--danger);
+}
+
+.admin-section td select {
+  max-width: 140px;
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.admin-notice {
+  padding: 0.9rem 1rem;
+  color: var(--forest-900);
+  background: var(--success-soft);
+  border: 1px solid var(--success);
+  border-radius: var(--r-md);
+}
+
+.admin-approval-status {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  color: var(--text-muted);
+  background: var(--bg-deep);
+  border-radius: var(--r-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.admin-approval-status.approval-approved {
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.admin-approval-status.approval-rejected {
+  color: var(--danger);
+  background: var(--danger-soft);
+}

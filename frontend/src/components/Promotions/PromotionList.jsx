@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import { Link } from 'react-router-dom';
+import '../styles/components/promotion.css';
 
 const PromotionList = () => {
     const [promotions, setPromotions] = useState([]);
@@ -37,7 +38,7 @@ const PromotionList = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <div className="container mt-4">
+        <div className="container page-shell">
             <h2>Promotions List</h2>
             <Link to="/promotions/form" className="btn btn-primary mb-3">Create New Promotion</Link>
             {promotions.length === 0 ? (

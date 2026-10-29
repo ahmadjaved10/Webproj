@@ -1,35 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/login.css';
+import API from '../services/api';
+import { saveSession } from '../Shared/session';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/suppliers/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('authToken', data.token);
-        navigate('/home');
-      } else {
-        setError(data.message || 'Login failed');
-      }
+      const { data } = await API.post('/suppliers/login', { email, password });
+      saveSession(data);
+      navigate(location.state?.from?.pathname || location.state?.from || '/', { replace: true });
     } catch (error) {
       console.error('Login failed', error);
-      setError('An error occurred during login');
+      setError(error.response?.data?.message || 'An error occurred during login.');
     }
   };
 
@@ -61,6 +53,9 @@ const Login = () => {
           />
           <button type="submit" className="btn w-100">Login</button>
         </form>
+        <p className="register-login-link text-center mt-4 mb-0">
+          New supplier? <Link to="/register">Create an account</Link>
+        </p>
         <div className="text-center mt-4">
           <p>Or login with</p>
           <div className="social-login">

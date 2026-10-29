@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../services/api';
+import '../styles/components/product.css';
 
 
 const ProductDetails = () => {
@@ -64,7 +65,7 @@ const ProductDetails = () => {
 
   if (error) {
     return (
-      <div className="container mt-4">
+      <div className="container page-shell product-detail">
         <div className="alert alert-danger" role="alert">
           {error}
         </div>
@@ -149,7 +150,16 @@ const ProductDetails = () => {
             <div>
               <h2>{product.name}</h2>
               <p>
-                <strong>Price:</strong> ${product.price}
+                <strong>Price:</strong>{' '}
+                {Number(product.discountPercentage || 0) > 0 ? (
+                  <>
+                    <del className="text-muted me-2">${Number(product.basePrice ?? product.price).toFixed(2)}</del>
+                    <strong className="text-success">${Number(product.effectivePrice ?? product.price).toFixed(2)}</strong>
+                    <span className="badge bg-success ms-2">{product.discountPercentage}% off</span>
+                  </>
+                ) : (
+                  `$${Number(product.effectivePrice ?? product.price).toFixed(2)}`
+                )}
               </p>
               <p>
                 <strong>Category:</strong> {product.category}

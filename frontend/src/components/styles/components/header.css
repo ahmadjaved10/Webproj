@@ -1,31 +1,163 @@
-/* header.css */
 .header {
-    background-color: #f8f9fa; /* Light background */
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  padding: 0.75rem var(--pad-x) 0;
+  pointer-events: none;                 /* only the pill itself is clickable */
 }
 
-.nav-link {
-    font-weight: 600;
-    transition: all 0.3s ease;
+.header-inner {
+  pointer-events: auto;
+  position: relative;
+  max-width: 1240px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.55rem 0.5rem 1.1rem;
+  background: rgba(255, 252, 247, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: var(--r-pill);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, var(--shadow-2);
+  animation: fade-in 0.6s var(--ease-out) both;
 }
 
-.nav-link:hover {
-    color: #fff;
-    background-color: #007bff; /* Blue background on hover */
-    text-decoration: none;
+/* ---------- Brand ---------- */
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; flex-shrink: 0; color: var(--forest-900); }
+.brand:hover { color: var(--forest-900); }
+.brand-mark {
+  display: grid; place-items: center;
+  width: 38px; height: 38px; font-size: 1.2rem;
+  background: var(--primary-soft); border-radius: 50%;
+  transition: transform 0.4s var(--ease);
+}
+.brand:hover .brand-mark { transform: rotate(-12deg) scale(1.08); }
+.brand-text { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; }
+.brand-text span { color: var(--ember); margin: 0 0.1em; }
+
+/* ---------- Nav ---------- */
+.header-nav { flex: 1; min-width: 0; }
+.header-list {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.15rem; margin: 0; padding: 0; list-style: none;
 }
 
-.logo {
-    font-size: 1.8rem;
-    letter-spacing: 1px;
+.header-link {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.88rem; font-weight: 600; white-space: nowrap;
+  color: var(--text-muted);
+  background: transparent; border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
 }
+.header-link:hover { color: var(--forest-900); background: rgba(22, 101, 52, 0.08); }
+.header-link:active { transform: scale(0.95); }
+.header-link.is-active { color: #fff; background: var(--forest-900); box-shadow: 0 4px 12px rgba(10, 46, 35, 0.3); }
 
-/* Add a shadow for a more modern look */
-header.sticky-top {
-    position: sticky;
-    top: 0;
-    z-index: 1020;
+/* ---------- Dropdowns (<details>) ---------- */
+.header-dropdown { position: relative; }
+.header-dropdown > summary { list-style: none; user-select: none; }
+.header-dropdown > summary::-webkit-details-marker { display: none; }
+.header-dropdown > summary::after {
+  content: '';
+  width: 6px; height: 6px;
+  margin-top: -3px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.3s var(--ease);
 }
+.header-dropdown[open] > summary { color: var(--forest-900); background: rgba(22, 101, 52, 0.1); }
+.header-dropdown[open] > summary::after { transform: rotate(-135deg); margin-top: 3px; }
 
-.hover-link {
-    transition: color 0.2s ease;
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translate3d(-50%, -8px, 0) scale(0.97); }
+  to   { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
 }
+.header-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: 50%;
+  z-index: 5;
+  min-width: 200px;
+  margin: 0; padding: 0.45rem;
+  list-style: none;
+  background: rgba(255, 252, 247, 0.92);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-3);
+  transform: translate3d(-50%, 0, 0);
+  animation: dropdown-in 0.25s var(--ease-out) both;
+}
+.header-dropdown-link {
+  display: block;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.9rem; font-weight: 600;
+  color: var(--text);
+  border-radius: var(--r-sm);
+  transition: all 0.25s var(--ease);
+}
+.header-dropdown-link:hover { color: var(--primary); background: var(--primary-soft); transform: translateX(3px); }
+.header-dropdown-link.active { color: #fff; background: var(--forest-900); }
+
+/* ---------- Actions ---------- */
+.header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; margin-left: auto; }
+
+.header-cta {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  font: 700 0.88rem/1 var(--font-body);
+  color: #fff;
+  background: var(--grad-ember);
+  border: none;
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-ember);
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+}
+.header-cta:hover { color: #fff; transform: translateY(-2px); }
+.header-cta:active { transform: scale(0.95); }
+
+.header-burger {
+  display: none;
+  place-items: center;
+  width: 42px; height: 42px;
+  color: var(--forest-900);
+  background: var(--primary-soft);
+  border: none; border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+.header-burger:active { transform: scale(0.92); }
+
+/* ---------- Mobile: hamburger + stacked panel ---------- */
+@media (max-width: 900px) {
+  .header-inner { flex-wrap: wrap; row-gap: 0; padding: 0.5rem 0.5rem 0.5rem 0.9rem; }
+  .header-inner:has(.header-nav.is-open) { border-radius: var(--r-lg); }
+  .header-burger { display: grid; }
+
+  .header-nav { display: none; order: 3; flex-basis: 100%; padding: 0.5rem 0 0.4rem; }
+  .header-nav.is-open { display: block; animation: fade-up 0.35s var(--ease-out) both; }
+
+  .header-list { flex-direction: column; align-items: stretch; gap: 0.2rem; }
+  .header-link { width: 100%; justify-content: space-between; padding: 0.8rem 1rem; font-size: 0.95rem; }
+
+  /* Dropdowns expand in the flow instead of floating */
+  .header-dropdown-menu {
+    position: static;
+    min-width: 0;
+    margin: 0.25rem 0 0.4rem 0.75rem;
+    background: rgba(22, 101, 52, 0.06);
+    border: none; box-shadow: none;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    transform: none;
+    animation: fade-in 0.25s var(--ease) both;
+  }
+}
+@media (max-width: 380px) { .brand-text { font-size: 1.1rem; } .header-cta { padding-inline: 1rem; } }

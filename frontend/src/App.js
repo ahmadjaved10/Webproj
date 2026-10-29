@@ -1,10 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Import Components
 
 import Hero from './components/Hero/Hero';
 import MenuList from './components/Menu/MenuList';
@@ -19,7 +15,7 @@ import OrderForm from './components/Orders/OrderForm';
 import ProductList from './components/Products/ProductList';
 import ProductForm from './components/Products/ProductForm';
 import ProductDetails from './components/Products/ProductDetails';
-// Import EditProduct component
+import PublicProductList from './components/Products/PublicProductList';
 
 import NotificationsList from './components/Notifications/NotificationsList';
 import NotificationForm from './components/Notifications/NotificationForm';
@@ -36,73 +32,84 @@ import SupportTicketDetail from './components/Support/SupportTicketDetail';
 
 import PrivateRoute from './components/Shared/PrivateRoute';
 import Login from './components/Login/Login';
-import Layout from './components/Layout/Layout'; // Layout component for common structure
-import ErrorBoundary from './components/Shared/ErrorBoundary'; // Error handling component
+import Register from './components/Register/Register';
+import Layout from './components/Layout/Layout';
+import ErrorBoundary from './components/Shared/ErrorBoundary';
+import MenuPage from './components/Home/MenuPage';
+import GalleryPage from './components/Home/GalleryPage';
+import AboutPage from './components/Home/AboutPage';
+import CustomerShopPage from './components/Customer/CustomerShopPage';
+import CustomerCartPage from './components/Customer/CustomerCartPage';
+import CustomerCheckoutPage from './components/Customer/CustomerCheckoutPage';
+import CustomerLogin from './components/Customer/CustomerLogin';
+import CustomerRegister from './components/Customer/CustomerRegister';
+import CustomerOrdersPage from './components/Customer/CustomerOrdersPage';
+import AdminLogin from './components/Admin/AdminLogin';
+import AdminDashboardPage from './components/Admin/AdminDashboardPage';
 
+const HomePage = () => (
+  <>
+    <Hero />
+    <MenuList />
+    <PublicProductList />
+    <GalleryList />
+    <CTA />
+    <Footer />
+  </>
+);
+
+const renderPage = (page) => (
+  <Layout>
+    <ErrorBoundary>{page}</ErrorBoundary>
+  </Layout>
+);
+
+const renderProtectedPage = (page, role = 'supplier') => (
+  <PrivateRoute element={renderPage(page)} role={role} />
+);
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Redirect root path to login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
-        {/* Login Route */}
+        <Route path="/" element={renderPage(<HomePage />)} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/customer/login" element={<CustomerLogin />} />
+        <Route path="/customer/register" element={<CustomerRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/about" element={renderPage(<AboutPage />)} />
+        <Route path="/menu" element={renderPage(<MenuPage />)} />
+        <Route path="/gallery" element={renderPage(<GalleryPage />)} />
+        <Route path="/shop" element={renderPage(<CustomerShopPage />)} />
+        <Route path="/customer/cart" element={renderPage(<CustomerCartPage />)} />
+        <Route path="/customer/checkout" element={renderProtectedPage(<CustomerCheckoutPage />, 'customer')} />
+        <Route path="/customer/orders" element={renderProtectedPage(<CustomerOrdersPage />, 'customer')} />
+        <Route path="/admin" element={renderProtectedPage(<AdminDashboardPage />, 'admin')} />
 
-        {/* Home Route with Layout */}
-        <Route
-          path="/*"
-          element={
-            <Layout>
-              <ErrorBoundary>
-                <Routes>
-                  <Route path="home" element={
-                    <>
-                      <Hero />
-                      <MenuList />
-                      <GalleryList />
-                      <CTA />
-                      <Footer />
-                    </>
-                  } />
+        <Route path="/orders" element={renderProtectedPage(<OrdersList />)} />
+        <Route path="/orders/:orderId" element={renderProtectedPage(<OrderDetails />)} />
+        <Route path="/orders/form" element={renderProtectedPage(<OrderForm />)} />
 
-                  {/* Orders Routes */}
-                  <Route path="/orders" element={<OrdersList />} />
-                  <Route path="/orders/:orderId" element={<OrderDetails />} />
-                  <Route path="/orders/form" element={<PrivateRoute element={<OrderForm />} />} />
+        <Route path="/products" element={renderProtectedPage(<ProductList />)} />
+        <Route path="/add-product" element={renderProtectedPage(<ProductForm />)} />
+        <Route path="/products/:id" element={renderProtectedPage(<ProductDetails />)} />
 
-                  {/* Products Routes */}
-                  <Route path="/products" element={<ProductList />} />
-                  <Route path="/add-product" element={<PrivateRoute element={<ProductForm />} />} />
-                  <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/notifications" element={renderProtectedPage(<NotificationsList />)} />
+        <Route path="/notifications/form" element={renderProtectedPage(<NotificationForm />)} />
 
-                   {/* New Route for Editing Product */}
+        <Route path="/promotions" element={renderProtectedPage(<PromotionList />)} />
+        <Route path="/promotions/form" element={renderProtectedPage(<PromotionForm />)} />
 
-                  {/* Notifications Routes */}
-                  <Route path="notifications" element={<NotificationsList />} />
-                  <Route path="notifications/form" element={<PrivateRoute element={<NotificationForm />} />} />
+        <Route path="/inventory" element={renderProtectedPage(<InventoryList />)} />
+        <Route path="/inventory/form" element={renderProtectedPage(<InventoryForm />)} />
 
-                  {/* Promotions Routes */}
-                  <Route path="promotions" element={<PromotionList />} />
-                  <Route path="promotions/form" element={<PrivateRoute element={<PromotionForm />} />} />
+        <Route path="/support" element={renderProtectedPage(<SupportTicketList />)} />
+        <Route path="/support/form" element={renderProtectedPage(<SupportTicketForm />)} />
+        <Route path="/support/:id" element={renderProtectedPage(<SupportTicketDetail />)} />
 
-                  {/* Inventory Routes */}
-                  <Route path="inventory" element={<InventoryList />} />
-                  <Route path="inventory/form" element={<PrivateRoute element={<InventoryForm />} />} />
-
-                   {/* Support Tickets Routes */}
-     
-        <Route path="/support" element={<SupportTicketList />} />
-        <Route path="/support/form" element={<SupportTicketForm />} />
-        <Route path="/support/:id" element={<SupportTicketDetail />} />
-        
-        {/* Other routes */}
-                </Routes>
-              </ErrorBoundary>
-            </Layout>
-          }
-        />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

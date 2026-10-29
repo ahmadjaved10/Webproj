@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import { Link } from 'react-router-dom';
+import '../styles/components/support.css';
 
 const SupportTicketList = () => {
   const [tickets, setTickets] = useState([]);
@@ -34,7 +35,7 @@ const SupportTicketList = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="page-shell support-page">
       <h2>Support Tickets</h2>
       {message && <div className="alert alert-info">{message}</div>}
       <Link to="/support/form" className="btn btn-success mb-3">Create New Ticket</Link>

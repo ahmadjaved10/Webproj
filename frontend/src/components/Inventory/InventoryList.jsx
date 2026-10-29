@@ -47,7 +47,9 @@ const InventoryList = () => {
                   {inventoryLogs.map((log) => (
                       <li key={log._id} className="list-group-item d-flex justify-content-between align-items-center">
                           <div>
-                              Product ID: {log.productId} - Change Quantity: {log.changeQuantity} - Change Type: {log.changeType}
+                              <strong>{log.productId?.name || `Product ${log.productId}`}</strong>
+                              {' - '}Change: {log.changeType} {log.changeQuantity}
+                              {' - '}Remaining stock: {log.remainingStock}
                           </div>
                           <div>
                               {/* Link to edit form with log ID */}

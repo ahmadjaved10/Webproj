@@ -1,28 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import '../styles/components/order.css';
 
+const CUSTOMER_ORDER_TRANSITIONS = {
+    Placed: ['Accepted', 'Cancelled'],
+    Accepted: ['Preparing', 'Cancelled'],
+    Preparing: ['Ready', 'Cancelled'],
+    Ready: ['Completed', 'Cancelled'],
+    Completed: [],
+    Cancelled: [],
+};
+
 const OrdersList = () => {
     const [orders, setOrders] = useState([]);
+    const [customerOrders, setCustomerOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [customerOrderError, setCustomerOrderError] = useState('');
+    const [notice, setNotice] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await API.get('/orders');
-                setOrders(response.data);
-            } catch (error) {
-                setError(error.response?.status === 401 ? 'Unauthorized access. Please log in again.' : `Error fetching orders: ${error.message || 'Unknown error'}`);
-            } finally {
-                setLoading(false);
-            }
-        };
-        
-        fetchOrders();
+    const fetchOrders = useCallback(async (showLoading = false) => {
+        if (showLoading) setLoading(true);
+        try {
+            const [supplierOrdersResponse, customerOrdersResponse] = await Promise.all([
+                API.get('/orders'),
+                API.get('/orders/customer-orders'),
+            ]);
+            setOrders(supplierOrdersResponse.data);
+            setCustomerOrders(customerOrdersResponse.data.orders);
+            setError(null);
+            setCustomerOrderError('');
+        } catch (requestError) {
+            console.error('Error fetching supplier orders:', requestError);
+            const message = requestError.response?.data?.message || requestError.message || 'Unable to load orders.';
+            setError(message);
+            setCustomerOrderError(message);
+        } finally {
+            setLoading(false);
+        }
     }, []);
+
+    useEffect(() => {
+        fetchOrders(true);
+        const refreshTimer = window.setInterval(() => fetchOrders(), 15000);
+        return () => window.clearInterval(refreshTimer);
+    }, [fetchOrders]);
+
+    const updateCustomerOrderStatus = async (orderId, status) => {
+        setNotice('');
+        setCustomerOrderError('');
+        try {
+            await API.patch(`/orders/customer-orders/${orderId}/status`, { status });
+            setNotice(`Order ${orderId} updated to ${status === 'Completed' ? 'Delivered' : status}.`);
+            await fetchOrders();
+        } catch (requestError) {
+            console.error('Error updating customer order:', requestError);
+            setCustomerOrderError(requestError.response?.data?.message || 'Unable to update this customer order.');
+        }
+    };
 
     const deleteOrder = async (id) => {
         try {
@@ -39,13 +76,66 @@ const OrdersList = () => {
     const viewOrder = (id) => navigate(`/orders/${id}`);
 
     if (loading) return <div>Loading orders...</div>;
-    
-    if (error) return <div>{error}</div>;
 
     const sortedOrders = orders.sort((a, b) => a.totalAmount - b.totalAmount);
 
     return (
         <div className="container mt-4">
+            <section className="page-shell" aria-labelledby="customer-orders-title">
+                <h2 id="customer-orders-title">Customer orders for your products</h2>
+                <p>These orders contain only products belonging to your supplier account. Status changes are shown to the customer in their order history.</p>
+                <button type="button" className="btn btn-outline-success mb-3" onClick={() => fetchOrders(true)}>
+                    Refresh customer orders
+                </button>
+                {customerOrderError && <p className="alert alert-danger" role="alert">{customerOrderError}</p>}
+                {notice && <p className="alert alert-success" role="status">{notice}</p>}
+                {!customerOrderError && customerOrders.length === 0 && (
+                    <p>No customer orders for your products yet.</p>
+                )}
+                <div className="list-group">
+                    {customerOrders.map((order) => (
+                        <article className="list-group-item" key={order._id}>
+                            <div className="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h3 className="h5">Order {order._id}</h3>
+                                    <p className="mb-1">
+                                        Customer: {order.customerId?.name || 'Customer'} ({order.customerId?.email || 'account removed'})
+                                    </p>
+                                    <p className="mb-1">Placed: {new Date(order.createdAt).toLocaleString()}</p>
+                                </div>
+                                <strong>{order.status === 'Completed' ? 'Delivered' : order.status}</strong>
+                            </div>
+                            <ul>
+                                {order.items.map((item) => (
+                                    <li key={`${order._id}-${item.productId}`}>
+                                        {item.productName} × {item.quantity} — ${Number(item.lineTotal).toFixed(2)}
+                                        {item.discountPercentage > 0 && ` (${item.discountPercentage}% discount)`}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p><strong>Total: ${Number(order.totalAmount).toFixed(2)}</strong> · {order.paymentMethod}</p>
+                            <p>Pickup/delivery address: {order.deliveryAddress}</p>
+                            {order.customerNote && <p>Customer note: {order.customerNote}</p>}
+                            <label className="d-flex align-items-center gap-2">
+                                Update status
+                                <select
+                                    className="form-select"
+                                    style={{ maxWidth: '220px' }}
+                                    value=""
+                                    onChange={(event) => updateCustomerOrderStatus(order._id, event.target.value)}
+                                >
+                                    <option value="" disabled>{order.status === 'Completed' ? 'Delivered' : order.status}</option>
+                                    {(CUSTOMER_ORDER_TRANSITIONS[order.status] || []).map((status) => (
+                                        <option key={status} value={status}>{status === 'Completed' ? 'Delivered' : status}</option>
+                                    ))}
+                                </select>
+                            </label>
+                        </article>
+                    ))}
+                </div>
+            </section>
+
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
             <h2 className="text-center mb-4">Orders List</h2>
             <div className="text-center mb-4">
                 <Link to="/orders/form" className="btn btn-primary btn-lg">Create New Order</Link>

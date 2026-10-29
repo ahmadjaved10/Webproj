@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import API from '../services/api';
+import '../styles/components/product.css';
 
 
 const ProductForm = () => {
@@ -9,11 +10,16 @@ const ProductForm = () => {
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
   const [status, setStatus] = useState('Active');
-  const [images, setImages] = useState([]);
-  const [supplierId, setSupplierId] = useState('');
+  const [createdProductId, setCreatedProductId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setCreatedProductId('');
+    setErrorMessage('');
+    setIsSubmitting(true);
+
     const newProduct = {
       name: productName,
       description,
@@ -21,22 +27,41 @@ const ProductForm = () => {
       price,
       stock,
       status,
-      images,
-      supplierId,
     };
 
     try {
       const response = await API.post('/products', newProduct);
-      console.log('Product added successfully:', response.data);
+      setCreatedProductId(response.data._id);
+      setProductName('');
+      setDescription('');
+      setCategory('');
+      setPrice('');
+      setStock('');
+      setStatus('Active');
     } catch (error) {
       console.error('Error adding product:', error);
+      setErrorMessage(
+        error.response?.data?.message ||
+        error.message ||
+        'Unable to add product. Please try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container page-shell">
       <h2 className="text-center mb-4">Add New Product</h2>
-      <form onSubmit={handleSubmit} className="shadow p-4 bg-white rounded">
+      <form onSubmit={handleSubmit} className="form-card form-card--wide">
+        {createdProductId && (
+          <div className="alert alert-success" role="status">
+            Product added successfully. Product ID: <code>{createdProductId}</code>
+          </div>
+        )}
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">{errorMessage}</div>
+        )}
         <div className="row">
           <div className="col-md-6 mb-3">
             <label className="form-label">Product Name:</label>
@@ -105,20 +130,12 @@ const ProductForm = () => {
               <option value="Out of Stock">Out of Stock</option>
             </select>
           </div>
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Supplier ID:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={supplierId}
-              onChange={(e) => setSupplierId(e.target.value)}
-              required
-            />
-          </div>
         </div>
 
         <div className="text-center">
-          <button type="submit" className="btn btn-primary px-5">Add Product</button>
+          <button type="submit" className="btn btn-primary px-5" disabled={isSubmitting}>
+            {isSubmitting ? 'Adding Product...' : 'Add Product'}
+          </button>
         </div>
       </form>
     </div>

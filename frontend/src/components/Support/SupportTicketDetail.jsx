@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../styles/components/support.css';
 
 const SupportTicketDetail = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const SupportTicketDetail = () => {
   }, [id]);
 
   return (
-    <div className="p-4">
+    <div className="page-shell support-detail">
       <h2>Support Ticket Detail</h2>
       {ticketData ? (
         <div>

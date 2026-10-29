@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../services/api';
 import { useNavigate, useLocation } from 'react-router-dom';
+import '../styles/components/support.css';
 
 const SupportTicketForm = () => {
   const [ticketData, setTicketData] = useState({
@@ -63,7 +64,7 @@ const SupportTicketForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm">
+    <form onSubmit={handleSubmit} className="page-shell support-page support-ticket-form">
       <h2 className="mb-3">{isEditing ? 'Edit Support Ticket' : 'Create Support Ticket'}</h2>
       {message && <div className="alert alert-info">{message}</div>}
       <div className="mb-3">

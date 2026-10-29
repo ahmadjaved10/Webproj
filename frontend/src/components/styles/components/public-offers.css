@@ -1,0 +1,56 @@
+.public-offers-banner {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.6fr) 1.4fr;
+  gap: 1.25rem;
+  align-items: center;
+  margin: 0 0 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  color: #fff;
+  background: var(--grad-forest);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+}
+
+.public-offers-banner h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.public-offers-eyebrow {
+  margin: 0 0 0.4rem;
+  color: #fde68a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.public-offers-banner ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.public-offers-banner li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  color: var(--text);
+  background: var(--surface);
+  border-radius: var(--r-md);
+}
+
+.public-offers-banner li strong {
+  color: var(--ember-dark);
+  white-space: nowrap;
+}
+
+@media (max-width: 650px) {
+  .public-offers-banner {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,92 @@
+/* Vibrant blurry food backdrop: swap the URL for your own dish photo */
+.checkout-scene {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1060;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(251, 146, 60, 0.75), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.6), transparent 40%),
+    radial-gradient(circle at 60% 85%, rgba(16, 185, 129, 0.7), transparent 50%),
+    #0b2f26;
+  /* background-image: url('/dish3.jpg'); background-size: cover; */
+}
+.checkout-scene::before {          /* extra blur layer for a photo backdrop */
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+}
+
+.checkout-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 1rem 1.5rem 1.5rem;
+  color: #fff;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);          /* semi-transparent white border */
+  border-radius: 28px;
+  box-shadow:                                            /* multi-layered, diffuse depth */
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.18),
+    0 48px 96px rgba(6, 78, 59, 0.3);
+  animation: sheetUp 280ms var(--ease-out);
+}
+@keyframes sheetUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.checkout-handle { width: 44px; height: 5px; margin: 0 auto 1rem; border-radius: 99px; background: rgba(255, 255, 255, 0.6); }
+
+.checkout-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.checkout-header h3 { margin: 0; font-size: 1.4rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+.checkout-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.2); color: #fff; cursor: pointer;
+  transition: background var(--dur-fast) ease;
+}
+.checkout-close:hover { background: rgba(255,255,255,0.35); }
+
+.checkout-items { list-style: none; padding: 0; margin: 0 0 1rem; }
+.checkout-items li {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0.9rem; margin-bottom: 0.5rem;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-md);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.25);
+}
+
+.checkout-totals { border-top: 1px dashed rgba(255,255,255,0.5); padding-top: 0.9rem; margin-bottom: 1.25rem; }
+.checkout-totals div { display: flex; justify-content: space-between; margin-bottom: 0.4rem; text-shadow: 0 1px 6px rgba(0,0,0,0.25); }
+.checkout-total { font-size: 1.3rem; font-weight: 800; margin-top: 0.5rem; }
+
+.checkout-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-accent);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(194, 65, 12, 0.45);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(194, 65, 12, 0.55); }
+.checkout-btn:active { transform: scale(0.98); }
+
+/* Fallback if backdrop-filter is unsupported */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .checkout-sheet { background: rgba(6, 78, 59, 0.85); }
+}

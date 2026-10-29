@@ -1,16 +1,20 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
-const PrivateRoute = ({ element }) => {
-  // Check if there's an auth token in localStorage
-  const isAuthenticated = localStorage.getItem('authToken');
+const PrivateRoute = ({ element, role = 'supplier' }) => {
+  const location = useLocation();
+  const isAuthenticated = Boolean(localStorage.getItem('authToken'));
+  const currentRole = localStorage.getItem('authRole') || 'supplier';
 
   if (!isAuthenticated) {
-    // If not authenticated, redirect to the login page
-    return <Navigate to="/login" />;
+    const loginPath = role === 'customer' ? '/customer/login' : role === 'admin' ? '/admin/login' : '/login';
+    return <Navigate to={loginPath} replace state={{ from: location }} />;
   }
 
-  // If authenticated, render the element (component) passed as a prop
+  if (currentRole !== role) {
+    return <Navigate to="/" replace />;
+  }
+
   return element;
 };
 

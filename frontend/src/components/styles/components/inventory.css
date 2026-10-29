@@ -1,76 +1,53 @@
-/* inventory.css */
-.inventory-list {
-  padding: 2rem 1rem;
-}
-
-.inventory-list h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+.inventory-list { padding: var(--section-y) var(--pad-x); }
+.inventory-list h2 { margin-bottom: 2rem; text-align: center; }
 
 .inventory-items {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
 }
-
 .inventory-item {
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
+  padding: 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  transition: all 0.4s var(--ease);
 }
+.inventory-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-2); }
 
 .inventory-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: min(600px, 100% - 2 * var(--pad-x));
+  margin: clamp(1.5rem, 5vw, 3rem) auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-3);
 }
-
-.inventory-form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.inventory-form .form-group {
-  margin-bottom: 1rem;
-}
-
-.inventory-form .form-group label {
-  font-weight: bold;
-}
-
+.inventory-form h2 { margin-bottom: 1.5rem; text-align: center; }
+.inventory-form .form-group { margin-bottom: 1.1rem; }
+.inventory-form .form-group label { font-weight: 600; color: var(--forest-800); }
 .inventory-form input {
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  padding: 0.8rem 1.1rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  transition: all 0.3s var(--ease);
 }
-
+.inventory-form input:focus { outline: none; border-color: var(--primary); box-shadow: var(--ring); }
 .inventory-form .submit-btn {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #4CAF50;
-  color: white;
+  padding: 0.95rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--grad-ember);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--r-pill);
   cursor: pointer;
-  font-size: 1.2rem;
+  box-shadow: var(--shadow-ember);
+  transition: all 0.4s var(--ease);
 }
-
-.inventory-form .submit-btn:hover {
-  background-color: #45a049;
-}
-
-@media (max-width: 768px) {
-  .inventory-items {
-    grid-template-columns: 1fr;
-  }
-
-  .inventory-form {
-    padding: 1rem;
-  }
-}
+.inventory-form .submit-btn:hover { transform: translateY(-3px); }
+.inventory-form .submit-btn:active { transform: scale(0.95); }

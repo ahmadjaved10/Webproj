@@ -8,6 +8,7 @@
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
     "axios": "^1.7.9",
+    "bootstrap": "^5.3.8",
     "common-tags": "^1.8.2",
     "cra-template": "1.2.0",
     "mdb-react-ui-kit": "^9.0.0",

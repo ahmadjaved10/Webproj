@@ -1,0 +1,146 @@
+.admin-page {
+  width: min(1200px, 100% - 2rem);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  color: var(--text);
+}
+
+.admin-page h1,
+.admin-page h2,
+.admin-page h3 {
+  color: var(--forest-900);
+}
+
+.admin-page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.admin-page-heading h1 {
+  margin-bottom: 0.5rem;
+}
+
+.admin-eyebrow {
+  margin-bottom: 0.4rem;
+  color: var(--ember-dark);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.admin-stat-card,
+.admin-section,
+.admin-record {
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.admin-stat-card p {
+  margin-bottom: 0.4rem;
+  color: var(--text-muted);
+}
+
+.admin-stat-card strong {
+  color: var(--primary);
+  font-size: 1.8rem;
+}
+
+.admin-section {
+  margin-bottom: 1.5rem;
+}
+
+.admin-section h2 {
+  margin-bottom: 1rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.admin-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.85rem;
+  box-shadow: none;
+}
+
+.admin-record h3 {
+  font-size: 1.05rem;
+}
+
+.admin-record p {
+  margin-bottom: 0.3rem;
+}
+
+.admin-record label {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 150px;
+  color: var(--forest-800);
+  font-weight: 700;
+}
+
+.admin-record select {
+  padding: 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.admin-button {
+  padding: 0.7rem 1.2rem;
+  color: #fff;
+  background: var(--grad-forest);
+  border: 0;
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-error {
+  padding: 0.9rem 1rem;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border-radius: var(--r-md);
+}
+
+.admin-auth .card {
+  max-width: 460px;
+}
+
+@media (max-width: 700px) {
+  .admin-page-heading,
+  .admin-record {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
